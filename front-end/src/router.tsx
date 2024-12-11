@@ -1,22 +1,34 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
+import LandPage from "./views/LandPage/LandPage";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
-import LandPage from "./views/LandPage/LandPage";
+import ItemsPage from "./views/ItemsPage/ItemsPage";
 
-const router = createBrowserRouter([
+export enum Routes {
+  LAND_PAGE = '/',
+  LOGIN = '/login',
+  REGISTER = '/register',
+  ITEMS_TO_GIVE = '/itemsToGive'
+}
+
+const router = createHashRouter([
   {
-    path: "/",
+    path: Routes.LAND_PAGE,
     element: <LandPage />,
     index: true,
   },
   {
-    path: "/login",
+    path: Routes.LOGIN,
     element: <Login />,
   },
   {
-    path: "/register",
+    path: Routes.REGISTER,
     element: <Register />,
   },
+  {
+    path: Routes.ITEMS_TO_GIVE,
+    element: <ItemsPage />
+  }
 ]);
 
 export default router;

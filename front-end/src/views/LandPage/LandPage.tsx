@@ -1,38 +1,39 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import FirstTime from "../../components/FirstTime/FirstTime";
-import Namespaces from "../../i18n/u18n.contants";
-import avatar from "../../images/avatar.png";
+import { Namespaces } from "../../i18n/i18n.constants";
 import "./LandPage.scss";
+import LandPageAvatar from "./LandPageAvatar/LandPageAvatar";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Routes } from "../../router";
 
 const LandPage = () => {
-  const { t } = useTranslation(Namespaces.titles);
+  const translations = {
+    tLandPage: useTranslation(Namespaces.landPage).t,
+    tAction: useTranslation(Namespaces.action).t,
+  };
   const navigate = useNavigate();
 
   const onLoginClick = () => {
-    navigate("/login");
+    navigate(Routes.LOGIN);
   };
 
   return (
     <Box className="landing-page">
-      <Box className="landing-page__image" component="img" src={avatar} />
+      <LandPageAvatar />
       <Box className="landing-page__title">
-        <Typography
-          className="landing-page__title--main"
-          sx={{
-            fontSize: "4rem",
-          }}
-        >
-          welcome
+        <Typography className="landing-page__title--main">
+          {translations.tLandPage("welcome")}
         </Typography>
-        <Typography className="landing-page__title--sub" sx={{}}>
-          {t("hereWeDonateItemsForWhomeNeedsThem")}
+        <Typography className="landing-page__title--sub">
+          {translations.tLandPage("hereWeDonateItemsForWhomeNeedsThem")}
         </Typography>
       </Box>
       <Box className="landing-page__links">
-        <Button onClick={onLoginClick}>login</Button>
-        <FirstTime />
+        <Button className="landing-page__links--login" onClick={onLoginClick}>
+          {translations.tAction("login")}
+        </Button>
+        <FirstTime alignment="center" />
       </Box>
     </Box>
   );

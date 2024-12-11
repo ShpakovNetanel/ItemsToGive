@@ -1,19 +1,19 @@
 import { Box, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
-import { useTranslation } from "react-i18next";
-import Namespaces from "../../i18n/u18n.contants";
 import "./TitledComponent.scss";
 
 type TitledComponentProps = {
   title: string;
 } & PropsWithChildren;
 
-const TitledComponent = ({ title, children }: TitledComponentProps) => {
-  const { t } = useTranslation(Namespaces.titles);
+const TitledComponent = ({
+  title,
+  children,
+}: TitledComponentProps) => {
 
   return (
     <Box className="titled-component">
-      <Typography className="titled-component__title">{t(title)}</Typography>
+      <Typography className="titled-component__title">{title}</Typography>
       {children}
     </Box>
   );

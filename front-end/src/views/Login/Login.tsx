@@ -1,29 +1,76 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import Input from "../../components/Input/Input";
-import Namespaces from "../../i18n/u18n.contants";
+import { useNavigate } from "react-router-dom";
+import { isTruthy } from "remeda";
+import { getUser } from "../../api/userService";
+import FirstTime from "../../components/FirstTime/FirstTime";
+import TextField from "../../components/TextField/TextField";
+import TitledComponent from "../../components/TitledComponent/TitledComponent";
+import { Namespaces } from "../../i18n/i18n.constants";
 import loginSchema, { LoginSchema } from "../../RHFSchemas/LoginSchema";
+import { Routes } from "../../router";
 import "./Login.scss";
+import { User } from "../../Data/users";
+import { useRecoilValue } from "recoil";
+import { loggedUser } from "../../atom/atom";
 
 const Login = () => {
-  const { t } = useTranslation(Namespaces.titles);
+  const translations = {
+    tTitle: useTranslation(Namespaces.title).t,
+    tField: useTranslation(Namespaces.field).t,
+    tPlaceholder: useTranslation(Namespaces.placeholder).t,
+    tAction: useTranslation(Namespaces.action).t,
+    tMessage: useTranslation(Namespaces.message).t,
+  };
 
-  const { control } = useForm<LoginSchema>({
+  const navigate = useNavigate();
+
+  const currentUser = useRecoilValue(loggedUser);
+
+  const { control, handleSubmit, setError } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { ...currentUser },
+  });
+
+  const onLoginClick = handleSubmit(async (user) => {
+    const loggedUser = await getUser({ ...user } as User);
+
+    if (isTruthy(loggedUser)) {
+      navigate(Routes.ITEMS_TO_GIVE);
+    } else {
+      setError("email", { message: translations.tMessage("UserNotFound") });
+    }
   });
 
   return (
     <Box className="login">
-      <Typography className="login__title">{t("login")}</Typography>
-      <Box className="login__input">
-        <Input control={control} name={"email"} />
+      <Typography className="login__title">
+        {translations.tTitle("login")}
+      </Typography>
+      <Box className="login__inputs">
+        <TitledComponent title={translations.tField("email")}>
+          <TextField
+            control={control}
+            name={"email"}
+            sx={{ width: "90vw" }}
+            placeholder={translations.tPlaceholder("stubMail")}
+          />
+        </TitledComponent>
+        <TitledComponent title={translations.tField("password")}>
+          <TextField
+            control={control}
+            name={"password"}
+            placeholder={translations.tPlaceholder("yourPassword")}
+            sx={{ width: "90vw" }}
+          />
+        </TitledComponent>
       </Box>
+      <FirstTime alignment="right" />
+      <Button className="login__button" onClick={onLoginClick}>
+        {translations.tAction("login")}
+      </Button>
     </Box>
   );
 };

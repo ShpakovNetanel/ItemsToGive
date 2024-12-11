@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material";
-import "./theme.scss";
 
 const theme = createTheme({
   direction: "rtl",
@@ -20,13 +19,26 @@ const theme = createTheme({
   },
   components: {
     MuiButton: {
-      defaultProps: {
-        className: "mui-button",
+      styleOverrides: {
+        root: {
+          backgroundColor: "#3e3d3d",
+          color: "#fff",
+          fontSize: "1.5rem",
+          padding: "0.75rem 2rem",
+          borderRadius: "2rem",
+          cursor: "pointer",
+          border: "none",
+        },
       },
     },
     MuiTextField: {
-      defaultProps: {
-        className: "mui-input",
+      styleOverrides: {
+        root: {
+          direction: "rtl",
+          fontSize: "1rem",
+          color: "grey",
+          borderRadius: "4rem",
+        },
       },
     },
   },

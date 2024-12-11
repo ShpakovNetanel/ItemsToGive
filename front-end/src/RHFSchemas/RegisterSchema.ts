@@ -1,21 +1,19 @@
-import { z } from "zod";
 import { isTruthy } from "remeda";
-import { UserTypes } from "../enums";
-
-const userTypes = Object.keys(UserTypes);
+import { z } from "zod";
 
 const registerSchema = z.object({
-  username: z.string().refine((username) => isTruthy(username), {
-    message: "usernameIsRequired",
-  }),
+  email: z
+    .string()
+    .email({ message: "enterValidEmail" })
+    .refine((username) => isTruthy(username), {
+      message: "emailIsRequired",
+    }),
   password: z.string().refine((password) => isTruthy(password), {
     message: "passwordIsRequired",
   }),
-  userType: z
-    .string()
-    .refine((userType) => userTypes.find((type) => type === userType), {
-      message: "userTypeIncorrect",
-    }),
+  phoneNumber: z.string().refine((phoneNumber) => isTruthy(phoneNumber), {
+    message: "phoneNumberIsRequired",
+  }),
 });
 
 export type RegisterSchema = z.infer<typeof registerSchema>;

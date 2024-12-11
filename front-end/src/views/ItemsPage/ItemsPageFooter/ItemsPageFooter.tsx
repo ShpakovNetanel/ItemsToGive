@@ -1,8 +1,9 @@
-import { AddBox, Home, LocalShipping } from "@mui/icons-material";
+import { AddBox, HomeRounded, LocalShipping } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { DisplayedItems } from "../../../enums";
 import { useTranslation } from "react-i18next";
-import Namespaces from "../../../i18n/u18n.contants";
+import { Namespaces } from "../../../i18n/i18n.constants";
+import "./ItemsPageFooter.scss";
 
 type ItemsPageFooterProps = {
   displayedItems: DisplayedItems;
@@ -26,18 +27,18 @@ const ItemsPageFooter = ({
       >
         <BottomNavigationAction
           className="footer__button"
-          label={t('shippingRequest')}
+          label={t("shippingRequest")}
           icon={<LocalShipping />}
         />
         <BottomNavigationAction
           className="footer__button"
-          label={t('myItems')}
+          label={t("myItems")}
           icon={<AddBox />}
         />
         <BottomNavigationAction
           className="footer__button"
-          label={t('home')}
-          icon={<Home />}
+          label={t("home")}
+          icon={<HomeRounded />}
         />
       </BottomNavigation>
     </>

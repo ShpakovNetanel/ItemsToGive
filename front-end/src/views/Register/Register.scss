@@ -1,0 +1,25 @@
+.register {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;  
+   
+     &__title {
+       margin-top: 3rem;
+       text-align: center;
+       font-size: 3rem;
+     }
+   
+     &__inputs {
+       margin-top: 3rem;
+       display: flex;
+       flex-direction: column;
+       gap: 2rem;
+     }
+   
+     &__button {
+       position: absolute;
+       width: 90vw;
+       bottom: 5rem;
+     }
+   }
+   
