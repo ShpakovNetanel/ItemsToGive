@@ -2,17 +2,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { isTruthy } from "remeda";
+import { getUser, addUser } from "../../api/userService";
 import TextField from "../../components/TextField/TextField";
 import TitledComponent from "../../components/TitledComponent/TitledComponent";
 import { Namespaces } from "../../i18n/i18n.constants";
 import registerSchema, {
   RegisterSchema,
 } from "../../RHFSchemas/RegisterSchema";
-import "./Register.scss";
-import { useNavigate } from "react-router-dom";
-import { getUser, setUser } from "../../api/userService";
-import { isTruthy } from "remeda";
 import { Routes } from "../../router";
+import "./Register.scss";
+import { useSetRecoilState } from "recoil";
+import { loggedUser } from "../../atom/atom";
 
 const Register = () => {
   const translations = {
@@ -34,6 +36,8 @@ const Register = () => {
     },
   });
 
+  const setCurrentUser = useSetRecoilState(loggedUser);
+
   const onLetsGoClick = handleSubmit(async (user) => {
     const existingUser = await getUser(user);
     if (isTruthy(existingUser)) {
@@ -41,7 +45,8 @@ const Register = () => {
         message: translations.tMessage("UserAlreadyExists"),
       });
     } else {
-      setUser(user);
+      addUser(user);
+      setCurrentUser({ ...user });
       navigate(Routes.ITEMS_TO_GIVE);
     }
   });

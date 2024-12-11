@@ -9,7 +9,8 @@ type InputProps<T extends FieldValues> = {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  sx: SxProps;
+  sx?: SxProps;
+  multiline?: boolean;
 } & RHF<T>;
 
 const TextField = <T extends FieldValues>({
@@ -18,6 +19,7 @@ const TextField = <T extends FieldValues>({
   placeholder,
   disabled,
   sx,
+  multiline,
 }: InputProps<T>) => {
   const { t } = useTranslation(Namespaces.message);
 
@@ -33,6 +35,7 @@ const TextField = <T extends FieldValues>({
             placeholder={placeholder}
             sx={{ ...sx }}
             error={isDefined(error)}
+            multiline={multiline}
             helperText={t(error?.message || "")}
           ></MuiTextField>
         )}

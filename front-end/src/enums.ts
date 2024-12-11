@@ -9,13 +9,13 @@ export enum ItemStatus {
   TO_SHIP = 1,
 }
 
-export enum DisplayedItems {
+export enum ItemCategoery {
   MY_ITEMS = 0,
-  OTHERS_ITEMS = 1,
+  HOME = 1,
   TO_SHIP_ITEMS = 2,
 }
 
-export enum HeaderTabs {
+export enum ItemClause {
   NEAR_ME = "NEAR_ME",
   ALL_ITEMS = "ALL_ITEMS",
 }

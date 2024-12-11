@@ -1,43 +1,50 @@
 import { AddBox, HomeRounded, LocalShipping } from "@mui/icons-material";
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { DisplayedItems } from "../../../enums";
+import {
+  BottomNavigation,
+  BottomNavigationAction
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { ItemCategoery } from "../../../enums";
 import { Namespaces } from "../../../i18n/i18n.constants";
 import "./ItemsPageFooter.scss";
 
 type ItemsPageFooterProps = {
-  displayedItems: DisplayedItems;
-  setDispalyedItems: React.Dispatch<React.SetStateAction<DisplayedItems>>;
+  selectedCategory: ItemCategoery;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<ItemCategoery>>;
 };
 
 const ItemsPageFooter = ({
-  displayedItems,
-  setDispalyedItems,
+  selectedCategory: displayedItemsClause,
+  setSelectedCategory: setDisplayedItemsClause,
 }: ItemsPageFooterProps) => {
-  const { t } = useTranslation(Namespaces.footer);
+  const { t } = useTranslation(Namespaces.itemsPage);
 
   return (
     <>
       <BottomNavigation
         className="footer"
-        value={displayedItems}
+        value={displayedItemsClause}
         onChange={(_, newValue) => {
-          setDispalyedItems(newValue);
+          setDisplayedItemsClause(newValue);
         }}
+        showLabels
       >
         <BottomNavigationAction
           className="footer__button"
           label={t("shippingRequest")}
+          value={ItemCategoery.TO_SHIP_ITEMS}
           icon={<LocalShipping />}
         />
         <BottomNavigationAction
           className="footer__button"
           label={t("myItems")}
+          value={ItemCategoery.MY_ITEMS}
           icon={<AddBox />}
         />
         <BottomNavigationAction
           className="footer__button"
           label={t("home")}
+          value={ItemCategoery.HOME}
           icon={<HomeRounded />}
         />
       </BottomNavigation>

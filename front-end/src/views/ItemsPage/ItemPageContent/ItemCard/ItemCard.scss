@@ -1,0 +1,18 @@
+.item-card {
+  max-width: 40vw;
+  height: 20vh;
+  border-radius: 2rem;
+  box-shadow: 3;
+  position: relative;
+
+  &__image {
+    height: 100%;
+    width: 100%;
+  }
+
+  &__content {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+}

@@ -6,10 +6,10 @@ const loginSchema = z.object({
     .string()
     .email()
     .refine((username) => isTruthy(username), {
-      message: "emailIsRequired",
+      message: "requiredField",
     }),
   password: z.string().refine((password) => isTruthy(password), {
-    message: "passwordIsRequired",
+    message: "requiredField",
   }),
 });
 

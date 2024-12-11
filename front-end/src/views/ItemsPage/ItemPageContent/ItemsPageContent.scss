@@ -1,0 +1,8 @@
+.displayed-items {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  overflow-y: scroll;
+  justify-content: center;
+  column-gap: 2rem;
+  row-gap: 1rem;
+}

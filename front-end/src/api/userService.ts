@@ -9,6 +9,10 @@ export const getUser = async (userToFind: User) => {
   return user;
 };
 
-export const setUser = async (userToAdd: User) => {
+export const addUser = async (userToAdd: User) => {
   users.push(userToAdd);
+};
+
+export const getLocation = () => {
+  return "Holon";
 };

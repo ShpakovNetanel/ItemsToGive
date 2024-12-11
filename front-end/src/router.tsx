@@ -3,12 +3,15 @@ import LandPage from "./views/LandPage/LandPage";
 import Login from "./views/Login/Login";
 import Register from "./views/Register/Register";
 import ItemsPage from "./views/ItemsPage/ItemsPage";
+import ItemDetails from "./views/ItemDetails/ItemDetails";
 
 export enum Routes {
-  LAND_PAGE = '/',
-  LOGIN = '/login',
-  REGISTER = '/register',
-  ITEMS_TO_GIVE = '/itemsToGive'
+  LAND_PAGE = "/",
+  LOGIN = "/login",
+  REGISTER = "/register",
+  ITEMS_TO_GIVE = "/itemsToGive",
+  ITEM_DETAILS = "/itemDetails",
+  SUCCESS = "/success",
 }
 
 const router = createHashRouter([
@@ -27,8 +30,12 @@ const router = createHashRouter([
   },
   {
     path: Routes.ITEMS_TO_GIVE,
-    element: <ItemsPage />
-  }
+    element: <ItemsPage />,
+  },
+  {
+    path: Routes.ITEM_DETAILS,
+    element: <ItemDetails />
+  },
 ]);
 
 export default router;

@@ -6,13 +6,13 @@ const registerSchema = z.object({
     .string()
     .email({ message: "enterValidEmail" })
     .refine((username) => isTruthy(username), {
-      message: "emailIsRequired",
+      message: "requiredField",
     }),
   password: z.string().refine((password) => isTruthy(password), {
-    message: "passwordIsRequired",
+    message: "requiredField",
   }),
   phoneNumber: z.string().refine((phoneNumber) => isTruthy(phoneNumber), {
-    message: "phoneNumberIsRequired",
+    message: "requiredField",
   }),
 });
 
