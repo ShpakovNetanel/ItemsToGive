@@ -1,11 +1,11 @@
 import { AddBox, HomeRounded, LocalShipping } from "@mui/icons-material";
-import {
-  BottomNavigation,
-  BottomNavigationAction
-} from "@mui/material";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { Item } from "../../../Data/items";
 import { ItemCategoery } from "../../../enums";
 import { Namespaces } from "../../../i18n/i18n.constants";
+import { Routes } from "../../../router";
 import "./ItemsPageFooter.scss";
 
 type ItemsPageFooterProps = {
@@ -19,6 +19,14 @@ const ItemsPageFooter = ({
 }: ItemsPageFooterProps) => {
   const { t } = useTranslation(Namespaces.itemsPage);
 
+  const navigate = useNavigate();
+
+  const onNewPostClick = () => {
+    navigate(Routes.ITEM_MODIFICATION, {
+      state: { item: {} as Item, isNew: true },
+    });
+  };
+
   return (
     <>
       <BottomNavigation
@@ -31,7 +39,7 @@ const ItemsPageFooter = ({
       >
         <BottomNavigationAction
           className="footer__button"
-          label={t("shippingRequest")}
+          label={t("waitingForShipping")}
           value={ItemCategoery.TO_SHIP_ITEMS}
           icon={<LocalShipping />}
         />
@@ -43,7 +51,14 @@ const ItemsPageFooter = ({
         />
         <BottomNavigationAction
           className="footer__button"
-          label={t("home")}
+          label={t("newPost")}
+          onClick={onNewPostClick}
+          value={ItemCategoery.NEW_POST}
+          icon={<HomeRounded />}
+        />
+        <BottomNavigationAction
+          className="footer__button"
+          label={t("forGiving")}
           value={ItemCategoery.HOME}
           icon={<HomeRounded />}
         />

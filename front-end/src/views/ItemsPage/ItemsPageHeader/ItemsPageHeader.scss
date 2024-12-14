@@ -3,13 +3,15 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 2rem 2rem;
-  position: sticky;
+  position: absolute;
+  top: 1vh;
+  width: 100%;
+  z-index: 1;
 
   &__search,
   &__logout {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.8 );
     width: 3rem;
-    height: 3rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -20,10 +22,25 @@
 
   &__item-clauses {
     border: none;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 
     &--option {
-      background: none;
-      color: white;
+      color: white !important;
+      background-color: none;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    &--active-option {
+      background-color: black;
+      border-radius: 5rem;
+      color: white !important;
+      font-weight: 800; 
+      font-size: 1rem;
     }
   }
 }

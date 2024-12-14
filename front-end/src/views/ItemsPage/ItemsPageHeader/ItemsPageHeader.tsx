@@ -1,40 +1,52 @@
 import { Logout, SearchRounded } from "@mui/icons-material";
 import { Box, IconButton, Tab, Tabs } from "@mui/material";
+import clsx from "clsx";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { ItemClause } from "../../../enums";
+import { ItemCategoery, ItemClause } from "../../../enums";
+import { useAuth } from "../../../hooks/useAuth";
 import { Namespaces } from "../../../i18n/i18n.constants";
 import { Routes } from "../../../router";
 import "./ItemsPageHeader.scss";
-import { useSetRecoilState } from "recoil";
-import { loggedUser } from "../../../atom/atom";
-import { User } from "../../../Data/users";
+import tabs from "./Tabs.utilites";
 
 type ItemsPageHeaderProps = {
   selectedClause: ItemClause;
   setSelectedClause: React.Dispatch<React.SetStateAction<ItemClause>>;
+  selectedCategory: ItemCategoery;
 };
 
 const ItemsPageHeader = ({
   selectedClause,
   setSelectedClause,
+  selectedCategory,
 }: ItemsPageHeaderProps) => {
   const { t } = useTranslation(Namespaces.itemsPage);
+  const [relevantTabs, setRelevantTabs] = useState(tabs);
+
+  const { logout } = useAuth();
 
   const navigate = useNavigate();
 
-  const setCurrentUser = useSetRecoilState(loggedUser);
-
   const onItemClauseChange = (itemClause: ItemClause) => {
-    console.log(itemClause);
-
     setSelectedClause(itemClause);
   };
 
   const onLogoutClick = () => {
     navigate(Routes.LAND_PAGE);
-    setCurrentUser({} as User);
+    logout();
   };
+
+  useEffect(() => {
+    const filteredTabs = tabs.filter((tab) =>
+      tab.relevantCategories.some(
+        (relevantCategory) => relevantCategory === selectedCategory
+      )
+    );
+
+    setRelevantTabs(filteredTabs);
+  }, [selectedCategory]);
 
   return (
     <Box className="header">
@@ -46,16 +58,18 @@ const ItemsPageHeader = ({
         value={selectedClause}
         onChange={(_, value) => onItemClauseChange(value)}
       >
-        <Tab
-          className="header__item-clauses--option"
-          label={t("nearMe")}
-          value={ItemClause.NEAR_ME}
-        />
-        <Tab
-          className="header__item-clauses--option"
-          label={t("allItems")}
-          value={ItemClause.ALL_ITEMS}
-        />
+        {relevantTabs.map((tab) => (
+          <Tab
+            key={tab.tabName}
+            className={clsx(
+              "header__item-clauses--option",
+              selectedClause === tab.tabValue &&
+                "header__item-clauses--active-option"
+            )}
+            label={t(tab.tabName)}
+            value={tab.tabValue}
+          />
+        ))}
       </Tabs>
       <IconButton className="header__logout" onClick={onLogoutClick}>
         <Logout />

@@ -14,11 +14,15 @@ const TitledComponent = ({
 }: TitledComponentProps) => {
   return (
     <Box className="titled-component">
-      <Typography className="titled-component__title">
-        {title}
-        {required ? "*" : ""}
-      </Typography>
-      {children}
+      <Box className="titled-component__title">
+        <Typography className="titled-component__title--text">
+          {title}
+        </Typography>
+        <Typography className="titled-component__title--required">
+          {required ? "*" : ""}
+        </Typography>
+      </Box>
+      <Box className="titled-component__content">{children}</Box>
     </Box>
   );
 };

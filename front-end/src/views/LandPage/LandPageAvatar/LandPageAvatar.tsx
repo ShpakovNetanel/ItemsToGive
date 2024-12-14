@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import avatar from "../../../images/avatar.png";
+import avatar from "../../../images/image.png";
 import "./LandPageAvatar.scss";
 
 const LandPageAvatar = () => {

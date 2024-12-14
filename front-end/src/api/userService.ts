@@ -1,12 +1,15 @@
+import { useQuery } from "react-query";
 import { User, users } from "../Data/users";
 
 export const getUser = async (userToFind: User) => {
-  const user = users.find(
+  return users.find(
     (user) =>
       user.email === userToFind.email && user.password === userToFind.password
   );
+};
 
-  return user;
+export const checkUserExist = async (userToFind: User) => {
+  return users.find((user) => user.email === userToFind.email);
 };
 
 export const addUser = async (userToAdd: User) => {
@@ -14,5 +17,16 @@ export const addUser = async (userToAdd: User) => {
 };
 
 export const getLocation = () => {
-  return "Holon";
+  return "חולון";
+};
+
+export const useItemOwnerPhoneNumber = (itemOwner: string) => {
+  const getItemOwnerPhoneNumber = async () => {
+    return users.find((user) => user.email === itemOwner)?.phoneNumber;
+  };
+
+  return useQuery({
+    queryKey: ["getItemOwnerPhoneNumber", itemOwner],
+    queryFn: getItemOwnerPhoneNumber,
+  });
 };

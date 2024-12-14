@@ -4,17 +4,16 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { isTruthy } from "remeda";
-import { getUser, addUser } from "../../api/userService";
+import { addUser, checkUserExist } from "../../api/userService";
 import TextField from "../../components/TextField/TextField";
 import TitledComponent from "../../components/TitledComponent/TitledComponent";
+import { useAuth } from "../../hooks/useAuth";
 import { Namespaces } from "../../i18n/i18n.constants";
 import registerSchema, {
   RegisterSchema,
 } from "../../RHFSchemas/RegisterSchema";
 import { Routes } from "../../router";
 import "./Register.scss";
-import { useSetRecoilState } from "recoil";
-import { loggedUser } from "../../atom/atom";
 
 const Register = () => {
   const translations = {
@@ -25,6 +24,7 @@ const Register = () => {
     tMessage: useTranslation(Namespaces.message).t,
   };
 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const { control, handleSubmit, setError } = useForm<RegisterSchema>({
@@ -36,18 +36,17 @@ const Register = () => {
     },
   });
 
-  const setCurrentUser = useSetRecoilState(loggedUser);
-
   const onLetsGoClick = handleSubmit(async (user) => {
-    const existingUser = await getUser(user);
+    const existingUser = await checkUserExist(user);
+
     if (isTruthy(existingUser)) {
       setError("email", {
         message: translations.tMessage("UserAlreadyExists"),
       });
     } else {
       addUser(user);
-      setCurrentUser({ ...user });
-      navigate(Routes.ITEMS_TO_GIVE);
+      navigate(Routes.ITEMS);
+      login(user);
     }
   });
 
@@ -71,6 +70,7 @@ const Register = () => {
             name={"password"}
             placeholder={translations.tPlaceholder("yourPassword")}
             sx={{ width: "90vw" }}
+            type="password"
           />
         </TitledComponent>
         <TitledComponent title={translations.tField("phoneNumber")}>

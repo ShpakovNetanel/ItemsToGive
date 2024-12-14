@@ -5,5 +5,6 @@ export type User = {
 };
 
 export const users: User[] = [
-  { email: "a@gmail.com", password: "12345678", phoneNumber: "0526310107" },
+  { email: "a@gmail.com", password: "12345678", phoneNumber: "+972526310107" },
+  { email: "b@gmail.com", password: "12345678", phoneNumber: "+972526310107" },
 ];

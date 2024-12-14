@@ -3,9 +3,13 @@ import { User } from "../Data/users";
 
 export const loggedUser = atom<User>({
   key: "loggedUser",
-  default: {
-    email: "",
-    password: "",
-    phoneNumber: "",
-  },
+  default: (() => {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : {};
+  })(),
+});
+
+export const cityOfUser = atom<string>({
+  key: "cityOfUser",
+  default: "",
 });

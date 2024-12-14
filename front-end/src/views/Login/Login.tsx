@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { isTruthy } from "remeda";
 import { getUser } from "../../api/userService";
 import { loggedUser } from "../../atom/atom";
@@ -11,6 +11,7 @@ import FirstTime from "../../components/FirstTime/FirstTime";
 import TextField from "../../components/TextField/TextField";
 import TitledComponent from "../../components/TitledComponent/TitledComponent";
 import { User } from "../../Data/users";
+import { useAuth } from "../../hooks/useAuth";
 import { Namespaces } from "../../i18n/i18n.constants";
 import loginSchema, { LoginSchema } from "../../RHFSchemas/LoginSchema";
 import { Routes } from "../../router";
@@ -25,9 +26,11 @@ const Login = () => {
     tMessage: useTranslation(Namespaces.message).t,
   };
 
+  const { login } = useAuth();
+
   const navigate = useNavigate();
 
-  const [currentUser, setCurrentUser] = useRecoilState(loggedUser);
+  const currentUser = useRecoilValue(loggedUser);
 
   const { control, handleSubmit, setError } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -38,10 +41,10 @@ const Login = () => {
     const loggedUser = await getUser({ ...user } as User);
 
     if (isTruthy(loggedUser)) {
-      navigate(Routes.ITEMS_TO_GIVE);
-      setCurrentUser(loggedUser);
+      navigate(Routes.ITEMS);
+      login(loggedUser);
     } else {
-      setError("email", { message: translations.tMessage("UserNotFound") });
+      setError("email", { message: translations.tMessage("userNotFound") });
     }
   });
 
@@ -63,6 +66,7 @@ const Login = () => {
           <TextField
             control={control}
             name={"password"}
+            type="password"
             placeholder={translations.tPlaceholder("yourPassword")}
             sx={{ width: "90vw" }}
           />

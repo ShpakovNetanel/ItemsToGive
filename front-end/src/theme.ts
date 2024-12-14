@@ -36,8 +36,15 @@ const theme = createTheme({
         root: {
           direction: "rtl",
           fontSize: "1rem",
-          color: "grey",
+          color: "#ECF1F5",
           borderRadius: "4rem",
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          display: "none",
         },
       },
     },

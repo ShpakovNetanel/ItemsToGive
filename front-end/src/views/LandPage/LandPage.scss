@@ -3,10 +3,11 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   background-color: #f7f7f7;
 
   &__title {
-    margin-top: 2rem;
+    margin-top: 5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,7 +21,7 @@
       font-size: 2rem;
       width: 70vw;
       text-align: center;
-      color: grey;
+      color: #ECF1F5;
       font-weight: 300;
     }
   }
